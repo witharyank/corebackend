@@ -1,10 +1,12 @@
 package com.corebackend.corebackend.controller;
 
-import com.corebackend.corebackend.service.HelloService;
+import com.corebackend.corebackend.dto.HelloRequest;
+import com.corebackend.corebackend.services.HelloService;
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/hello")
 public class HelloController {
 
     private final HelloService helloService;
@@ -13,15 +15,15 @@ public class HelloController {
         this.helloService = helloService;
     }
 
-    // GET http://localhost:8080/api
+    // GET http://localhost:8080/hello
     @GetMapping
     public String home() {
-        return helloService.sayHello();
+        return "Hola";
     }
 
-    // GET http://localhost:8080/api/hello?name=Kumar
-    @GetMapping("/hello")
-    public String hello(@RequestParam String name) {
-        return helloService.sayHelloTo(name);
+    // POST http://localhost:8080/hello
+    @PostMapping
+    public String sayHello(@RequestBody HelloRequest request) {
+        return helloService.sayHelloTo(request.getName());
     }
 }
